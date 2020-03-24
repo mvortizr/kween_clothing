@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import HomePage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
+import Header from './components/header/Header'
 
 let routes = [
   {
@@ -19,12 +20,15 @@ let routes = [
 function App() {
   return (
   <div>
-    {routes.map(
-        ({path,render}) => (
-          <Route exact path={path} render={(props) => render(props)}/>
+    <Header/>
+    <Switch>
+      {routes.map(
+          ({path,render}) => (
+            <Route exact path={path} render={(props) => render(props)}/>
+          )
         )
-      )
-    }
+      }
+    </Switch>
   </div>
   );
 }
