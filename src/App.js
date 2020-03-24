@@ -4,7 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 
 import HomePage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
-import Header from './components/header/Header'
+import Header from './components/header/Header';
+import SignInSignUp from './pages/signin-signup/SignInSignUp';
 
 let routes = [
   {
@@ -14,7 +15,11 @@ let routes = [
   {
     path: '/shop',
     render: (props) => <Shop {...props} />
-  }
+  },
+  {
+    path: '/signin',
+    render: (props) => <SignInSignUp {...props} />
+  },
 ];
 
 function App() {
