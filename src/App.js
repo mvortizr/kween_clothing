@@ -29,7 +29,7 @@ function App() {
     <Switch>
       {routes.map(
           ({path,render}) => (
-            <Route exact path={path} render={(props) => render(props)}/>
+            <Route exact path={path} key={path} render={(props) => render(props)}/>
           )
         )
       }
