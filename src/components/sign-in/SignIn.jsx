@@ -1,9 +1,12 @@
 import React from 'react';
 import FormInput from '../form-input/FormInput';
 import CustomButton from '../custom-button/CustomButton';
-import './sign-in.styles.scss';
 import {Formik, Form} from 'formik';
 import * as yup from "yup";
+
+import { signInWithGoogle } from '../../firebase/firebase.utils';
+import './sign-in.styles.scss';
+
 
 const initialValues = {
     email: "",
@@ -59,6 +62,14 @@ const SignIn = () => (
                         type='submit' 
                         disabled={isSubmitting}
                         onClick={submitForm}
+                    > 
+                        Sign in 
+                    </CustomButton>
+                    <CustomButton 
+                        type='submit' 
+                        disabled={isSubmitting}
+                        onClick={signInWithGoogle} 
+                        isGoogleSignIn
                     > 
                         Sign in 
                     </CustomButton>
