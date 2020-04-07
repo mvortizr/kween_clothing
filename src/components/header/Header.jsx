@@ -1,29 +1,32 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './header.styles.scss'
+import { auth } from '../../firebase/firebase.utils';
 import {ReactComponent as Logo} from '../../assets/crown.svg';
 
 
-const optionStyle = {
-    margin:'0 10px'
-}
-
-const Header = () => (
+const Header = ({currentUser}) => (
 
     <div className="header">
         <Link to="/" className="logo-container">
             <Logo className="logo"/>
         </Link>
         <div className="options-container">
-            <Link to="/shop" style={optionStyle}>
+            <Link to="/shop" >
                 SHOP
             </Link>
-            <Link to="/contact" style={optionStyle}>
+            <Link to="/contact">
                 CONTACT
             </Link>
-            <Link to="/signin" style={optionStyle}>
-                SIGN IN / SIGN UP
-            </Link>
+            {currentUser ? (
+                <div className='option' onClick={() => auth.signOut()}>
+                  SIGN OUT
+                </div>
+              ) : (
+                <Link className='option' to='/signin'>
+                  SIGN IN / SIGN UP
+                </Link>
+            )}
         </div>
     </div>
 )

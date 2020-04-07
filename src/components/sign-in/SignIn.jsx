@@ -32,7 +32,7 @@ const validationSchema = yup.object({
 const SignIn = () => (
     <div className='sign-in'>
         <h2>I already have an account</h2>
-        <span>Sign in with your email and password</span>
+        <span>Sign in with your email and password</span>   
 
         <Formik
             validateOnChange={true}
@@ -58,6 +58,8 @@ const SignIn = () => (
                         label='Password'
                     />
 
+                    <div className='buttons'>
+
                     <CustomButton 
                         type='submit' 
                         disabled={isSubmitting}
@@ -66,13 +68,15 @@ const SignIn = () => (
                         Sign in 
                     </CustomButton>
                     <CustomButton 
-                        type='submit' 
+                        type='button'
                         disabled={isSubmitting}
                         onClick={signInWithGoogle} 
                         isGoogleSignIn
                     > 
-                        Sign in 
+                        Sign in with Google 
                     </CustomButton>
+
+                    </div>
                 </Form> 
             )}
         </Formik>
