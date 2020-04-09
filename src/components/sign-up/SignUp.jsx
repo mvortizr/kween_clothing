@@ -1,20 +1,25 @@
 import React from 'react';
 import FormInput from '../form-input/FormInput';
 import CustomButton from '../custom-button/CustomButton';
+import { auth,createUserProfileDocument } from '../../firebase/firebase.utils';
 import {Formik, Form} from 'formik';
 import * as yup from "yup";
-
-import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
-import './sign-in.styles.scss';
-
+import './sign-up.styles.scss';
 
 const initialValues = {
+	displayName:"",
     email: "",
     password: "",
-
+    confirmPassword:""
 }
 
+
 const validationSchema = yup.object({
+	displayName: yup
+        .string()
+        .min(2)
+        .required()
+        .max(200),
     email: yup
         .string()
         .min(2)
@@ -27,33 +32,44 @@ const validationSchema = yup.object({
         .max(16)
         .matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$","It must contain at least one uppercase letter, one lowercase letter, one number and one special character")
         .required(),
+    confirmPassword: yup.string()
+     .oneOf([yup.ref('password'), null], 'Passwords must match')
   });
 
-const handleSubmit = async ({email,password}, { setSubmitting }) => {
-    setSubmitting(true);
-
-     try {
-      await auth.signInWithEmailAndPassword(email, password)
-    } catch (error) {
-      console.log(error);
-    }
-
-    setSubmitting(false);
+const onSubmit = async (data, { setSubmitting }) => {
+	    
+	    setSubmitting(true);
+	    try {
+		      const { user } = await auth.createUserWithEmailAndPassword(
+		        data.email,
+		        data.password
+		      );
+		      const displayName = data.displayName;
+		      await createUserProfileDocument(user, {displayName});
+		} catch (error) {
+		    console.error(error);
+		}
+	    setSubmitting(false);
 }
 
-const SignIn = () => (
-    <div className='sign-in'>
-        <h2>I already have an account</h2>
-        <span>Sign in with your email and password</span>   
+const SignUp = () => (
+    <div className='sign-up'>
+        <h2>I don't have an account</h2>
+        <span>Sign Up with your email and password</span>   
 
         <Formik
             validateOnChange={true}
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={onSubmit}
         >
             {({ values, errors, isSubmitting, submitForm }) => (
                 <Form>  
+                	<FormInput
+                        name='displayName'
+                        type='text'
+                        label='Display Name'
+                    />
                     <FormInput
                         name='email'
                         type='email'
@@ -66,6 +82,12 @@ const SignIn = () => (
                         label='Password'
                     />
 
+                    <FormInput
+                        name='confirmPassword'
+                        type='password'
+                        label='Confirm Password'
+                    />
+
                     <div className='buttons'>
 
                     <CustomButton 
@@ -73,15 +95,14 @@ const SignIn = () => (
                         disabled={isSubmitting}
                         onClick={submitForm}
                     > 
-                        Sign in 
+                        Sign Up 
                     </CustomButton>
                     <CustomButton 
                         type='button'
                         disabled={isSubmitting}
-                        onClick={signInWithGoogle} 
                         isGoogleSignIn
                     > 
-                        Sign in with Google 
+                        Sign Up with Google 
                     </CustomButton>
 
                     </div>
@@ -92,4 +113,4 @@ const SignIn = () => (
     </div>
 )
 
-export default SignIn; 
+export default SignUp; 

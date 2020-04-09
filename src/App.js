@@ -16,13 +16,23 @@ const App =() => {
   const [currentUser,setCurrentUser] = useState(null);
 
   useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged(async user => {
-        createUserProfileDocument(user)
-      }); //this is equal than saying firebase.auth().onAuthStateChanged((user) => setAuthUser(user))
+      
+      const unsubscribe = auth.onAuthStateChanged(async userAuth => {      
+        if(userAuth){
+          const userRef =  await createUserProfileDocument(userAuth)
+          userRef.onSnapshot(snapshot => {
+            setCurrentUser({id: snapshot.id, ...snapshot.data()})
+          })
+        } else {
+          setCurrentUser(userAuth); //setting it to null
+        }      
+      });
+
       return () => {
         unsubscribe()
       };
-    }, []);
+
+  }, []);
 
   const routes = [
     {
@@ -42,7 +52,7 @@ const App =() => {
   return (
   <div>
     <Header currentUser={currentUser}/>
-    {console.log(currentUser)}
+    {console.log('currentUser',currentUser)}
     <Switch>
       {routes.map(
           ({path,render}) => (
