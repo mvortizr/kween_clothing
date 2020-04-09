@@ -7,7 +7,7 @@ import Shop from './pages/shop/Shop';
 import Header from './components/header/Header';
 import SignInSignUp from './pages/signin-signup/SignInSignUp';
 //import {useFirebase} from './firebase/firebase.utils';
-import { auth } from './firebase/firebase.utils';
+import { auth,createUserProfileDocument } from './firebase/firebase.utils';
 
 
 
@@ -16,7 +16,9 @@ const App =() => {
   const [currentUser,setCurrentUser] = useState(null);
 
   useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged(setCurrentUser); //this is equal than saying firebase.auth().onAuthStateChanged((user) => setAuthUser(user))
+      const unsubscribe = auth.onAuthStateChanged(async user => {
+        createUserProfileDocument(user)
+      }); //this is equal than saying firebase.auth().onAuthStateChanged((user) => setAuthUser(user))
       return () => {
         unsubscribe()
       };
