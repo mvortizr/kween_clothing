@@ -6,8 +6,7 @@ import HomePage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
 import Header from './components/header/Header';
 import SignInSignUp from './pages/signin-signup/SignInSignUp';
-//import {useFirebase} from './firebase/firebase.utils';
-import { auth,createUserProfileDocument } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 
 

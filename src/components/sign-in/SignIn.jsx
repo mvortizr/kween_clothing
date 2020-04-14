@@ -32,7 +32,7 @@ const validationSchema = yup.object({
 const handleSubmit = async ({email,password}, { setSubmitting }) => {
     setSubmitting(true);
 
-     try {
+    try {
       await auth.signInWithEmailAndPassword(email, password)
     } catch (error) {
       console.log(error);
