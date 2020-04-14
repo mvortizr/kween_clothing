@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import HomePage from './pages/homepage/Homepage';
 import Shop from './pages/shop/Shop';
@@ -8,13 +8,13 @@ import Header from './components/header/Header';
 import SignInSignUp from './pages/signin-signup/SignInSignUp';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import {setCurrentUser} from './redux/user/user-action-creator';
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 
 
 const App =() => {
 
-
+  const currentUser = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
 
   useEffect(() => {     
@@ -33,7 +33,7 @@ const App =() => {
         unsubscribe()
       };
 
-  }, []);
+  }, [dispatch]);
 
 
 
@@ -49,7 +49,7 @@ const App =() => {
     },
     {
       path: '/signin',
-      render: (props) => <SignInSignUp {...props} />
+      render: (props) => currentUser? (<Redirect to="/"/>):(<SignInSignUp {...props} />)
     },
   ];
 
