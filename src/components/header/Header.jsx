@@ -4,6 +4,7 @@ import './header.styles.scss'
 import { auth } from '../../firebase/firebase.utils';
 import {useSelector} from 'react-redux'
 import {ReactComponent as Logo} from '../../assets/crown.svg';
+import CartIcon from '../cart-icon/CartIcon';
 
 
 const Header = () => {
@@ -16,10 +17,10 @@ const Header = () => {
                 <Logo className="logo"/>
             </Link>
             <div className="options-container">
-                <Link to="/shop" >
+                <Link to="/shop" className="option">
                     SHOP
                 </Link>
-                <Link to="/contact">
+                <Link to="/contact" className="option">
                     CONTACT
                 </Link>
                 {currentUser ? (
@@ -31,6 +32,7 @@ const Header = () => {
                       SIGN IN / SIGN UP
                     </Link>
                 )}
+                <CartIcon />
             </div>
         </div>
     );
