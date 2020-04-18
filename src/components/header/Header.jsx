@@ -5,11 +5,14 @@ import { auth } from '../../firebase/firebase.utils';
 import {useSelector} from 'react-redux'
 import {ReactComponent as Logo} from '../../assets/crown.svg';
 import CartIcon from '../cart-icon/CartIcon';
+import CartDropDown from '../cart-dropdown/CartDropDown';
+
 
 
 const Header = () => {
 
     const currentUser = useSelector(state => state.user.currentUser)
+    const hideCart = useSelector(state => state.cart.hidden)
 
     return (
         <div className="header">
@@ -34,6 +37,8 @@ const Header = () => {
                 )}
                 <CartIcon />
             </div>
+            
+            { hideCart? null: <CartDropDown/> }
         </div>
     );
 }
