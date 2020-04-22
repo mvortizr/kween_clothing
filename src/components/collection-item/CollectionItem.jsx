@@ -4,10 +4,11 @@ import './collection-item.styles.scss';
 import {useDispatch} from 'react-redux';
 import {addItem} from '../../redux/cart/cart-action-creator';
 
-const CollectionItem = (item) => {
+const CollectionItem = ({item}) => {
 
     const dispatch = useDispatch()
     const {name, price, imageUrl} = item;
+
     return(
         <div className='collection-item'>
             <div
