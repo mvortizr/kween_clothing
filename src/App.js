@@ -9,12 +9,13 @@ import SignInSignUp from './pages/signin-signup/SignInSignUp';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import {setCurrentUser} from './redux/user/user-action-creator';
 import {useDispatch, useSelector} from 'react-redux'
+import {selectCurrentUser} from './redux/user/user-selectors';
 
 
 
 const App =() => {
 
-  const currentUser = useSelector(state => state.user.currentUser)
+  const currentUser = useSelector(state => selectCurrentUser(state))
   const dispatch = useDispatch()
 
   useEffect(() => {     
@@ -56,6 +57,7 @@ const App =() => {
   return (
     <div>
       <Header/>
+      {console.log('currentUser from App', currentUser)}
       <Switch>
         {routes.map(
             ({path,render}) => (

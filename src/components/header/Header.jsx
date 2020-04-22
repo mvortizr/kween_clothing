@@ -6,13 +6,18 @@ import {useSelector} from 'react-redux'
 import {ReactComponent as Logo} from '../../assets/crown.svg';
 import CartIcon from '../cart-icon/CartIcon';
 import CartDropDown from '../cart-dropdown/CartDropDown';
+import {selectCurrentUser} from '../../redux/user/user-selectors';
+import {selectCartHidden} from '../../redux/cart/cart-selectors';
+import {createStructuredSelector} from 'reselect';
 
 
 
 const Header = () => {
 
-    const currentUser = useSelector(state => state.user.currentUser)
-    const hideCart = useSelector(state => state.cart.hidden)
+    const {currentUser,hideCart} = useSelector(createStructuredSelector({
+                                        currentUser:selectCurrentUser, 
+                                        hideCart:selectCartHidden
+                                    }));
 
     return (
         <div className="header">
