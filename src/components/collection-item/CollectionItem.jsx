@@ -8,8 +8,6 @@ const CollectionItem = (item) => {
 
     const dispatch = useDispatch()
     const {name, price, imageUrl} = item;
-    //additem: item => dispatch(addItem(item))
-
     return(
         <div className='collection-item'>
             <div
